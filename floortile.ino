@@ -12,15 +12,16 @@ int fsrPins[NUMSWITCHES] = {6,7,8,9};
 int lavaTile = 0;
 int nextLavaTile = 0;
 
-// so the red
-#define LAVA_TIME 4
-#define WARNING_TIME 2
+
+#define LAVA_TIME 5 // time in seconds that the tile is red for
+#define WARNING_TIME 3 // time in seconds that flickers 
 
 int lavaTime = 3; // in seconds
 
 bool whiteOn = true;
 
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(80, PIN, NEO_GRB + NEO_KHZ800);
+
 int colorArray[][3] = { {255,20,0},    //red
                         {0,204 ,0}, //green
                         {128,0,255}, //purple
@@ -115,13 +116,11 @@ ISR(TIMER1_COMPA_vect) //is this every 1 second???
 {
  
     // make the next laval tile flicker
-  
-   if (lavaTime <= 0){
+   if (lavaTime == 2){
+      // start flicking 
+   }else if (lavaTime <= 0){
       // turn them white
-      for (int i = 4*lavaTile; i < 4*lavaTile + 4; i++){
-           strip.setPixelColor(i, strip.Color(127,127,127));
-          // strip.show();
-      }
+
       int copyNextLavaTile = nextLavaTile;
      
       nextLavaTile = random(0,4);      // change the location of the next lava
@@ -189,7 +188,7 @@ void flicker(int switchStates[]){
       }
 
         // make the pixels in the nextLavaTiles flicker, turn them all on or off
-     if (updateNumber >= 80){
+     if (updateNumber >= 95 && lavaTime <= WARNING_TIME){
         if (whiteOn){
           for (int j = 4*nextLavaTile; j < 4*nextLavaTile + 4; j++){
             strip.setPixelColor(j, strip.Color(255,20,0));
