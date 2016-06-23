@@ -18,7 +18,7 @@ int nextLavaTile = 0;
 
 int lavaTime = 3; // in seconds
 
-bool whiteOn = true;
+bool whiteOn = true; 
 
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(80, PIN, NEO_GRB + NEO_KHZ800);
 
@@ -145,8 +145,6 @@ void flicker(int switchStates[]){
     int updateNumber = 0;
     int tileIndex = 0;
     int colorNum = 0;
-
-    int randNum = random(0,100);
     
      
     for (uint16_t i = 0; i < NUMPIXELS; i = i +1){
